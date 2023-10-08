@@ -73,6 +73,14 @@ where
         self.shutdown(false)?;
         Ok(())
     }
+
+    /// Read the ID register
+    ///
+    /// Same as the device slave address. Default 0x60
+    pub fn read_id(&mut self) -> Result<u8, I2cError> {
+        self.read_u8(addresses::ID_REGISTER)
+    }
+
     /// Set the brightness at a specific x,y coordinate. Just like the [fill method](Self::fill)
     /// the brightness should range from 0 to 255. If the coordinate is out of range then the
     /// function will return an error of [InvalidLocation](Error::InvalidLocation).
@@ -183,6 +191,7 @@ pub mod addresses {
 
     pub const PAGE_SELECT_REGISTER: u8 = 0xFD;
     pub const CONFIG_LOCK_REGISTER: u8 = 0xFE;
+    pub const ID_REGISTER: u8 = 0xFC;
 
     pub const CONFIG_WRITE_ENABLE: u8 = 0b1100_0101;
     pub const RESET: u8 = 0xAE;
