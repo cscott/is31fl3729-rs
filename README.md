@@ -19,7 +19,7 @@ Right now there is only an example on how to use this crate with a stm32 nucleo.
 To install this driver in your project add the following line to your `Cargo.toml`'s `dependencies` table:
 
 ```toml
-is31fl3741 = "0.2.2"
+is31fl3741 = "0.3.0"
 ```
 
 By default this version will only contain the core driver.
@@ -27,7 +27,7 @@ To use a preconfigured device (currently just [Adafruit IS31FL3741 13x9 PWM RGB 
 you would need to change this line to include that device:
 
 ```toml
-is31fl3741 = { version = "0.2.2", features = ["adafruit13x9"] }
+is31fl3741 = { version = "0.3.0", features = ["adafruit13x9"] }
 ```
 
 ## Graphics
