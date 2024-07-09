@@ -65,7 +65,7 @@ where
         self.write_u8(addresses::GCC_REGISTER, 0x40)?;
         // scaling registers at max
         let mut buf = [0xff; addresses::SCALING_LEN + 1];
-        buf[0] = addresses::PWM_BASE_REGISTER;
+        buf[0] = addresses::SCALING_BASE_REGISTER;
         self.write(&buf)?;
         self.shutdown(false)?;
         Ok(())
