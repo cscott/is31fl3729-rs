@@ -34,9 +34,11 @@ where
             device: IS31FL3729 {
                 i2c,
                 address: 0x34,
-                // logically there are 9 "columns" of 7-segment displays
-                width: 9,
-                height: 8, // 7 segments plus a decimal point
+                // logically there are (9) 7-segment displays
+                width: 8, // 7 segments plus a decimal point
+                height: 9,
+                // x is "which segment"
+                // y is "which digit"
                 calc_pixel: |x: u8, y: u8| -> u8 { x + (0x10 * y) },
             },
         }
@@ -145,8 +147,8 @@ where
         ];
         for seg in 0..7 {
             self.device.pixel(
-                which,
                 seg,
+                which,
                 if lookup[(val % 36) as usize][seg as usize] {
                     0xFF
                 } else {
@@ -155,7 +157,7 @@ where
             )?;
         }
         self.device
-            .pixel(which, 7, if point { 0xFF } else { 0x00 })?;
+            .pixel(7, which, if point { 0xFF } else { 0x00 })?;
         Ok(())
     }
 
