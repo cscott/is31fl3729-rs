@@ -1,17 +1,18 @@
+cargo-features = ['edition2024']
+
 [package] 
-name = "is31fl3741"
-version = "0.3.0"
-edition = "2021"
-authors = ["Liz Frost", "Daniel Schaefer"]
+name = "is31fl3729"
+version = "0.1.0"
+edition = "2024"
+authors = ["Liz Frost", "Daniel Schaefer", "C. Scott Ananian"]
 categories = ["embedded", "no-std"]
-description = "Driver for Lumissil Microsystem's IS31FL3741 IC"
+description = "Driver for Lumissil Microsystem's IS31FL3729 IC"
 license = "MIT"
-repository = "https://github.com/FrameworkComputer/is31fl3741-rs"
+repository = "https://github.com/cscott/is31fl3729-rs"
 readme = "README.md"
 
 [dependencies]
 embedded-hal = "0.2.7"
-embedded-graphics-core = { optional = true, version = "0.4.0" }
 
 [package.metadata.docs.rs]
 all-features = true
@@ -22,17 +23,7 @@ cortex-m = "0.7.7"
 panic-halt = "0.2.0"
 stm32g0xx-hal = {version = "0.2.0", features = ["rt", "stm32g071"]}
 tinybmp = "0.5.0"
-embedded-graphics = "0.8.1"
 
 [features]
-adafruit_rgb_13x9 = []
-embedded_graphics = ["embedded-graphics-core"]
-default = ["adafruit_rgb_13x9", "embedded_graphics"]
-
-[[example]]
-name = "stm32"
-required-features = ["adafruit_rgb_13x9"]
-
-[[example]]
-name = "gaypride"
-required-features = ["adafruit_rgb_13x9", "embedded_graphics"]
+sevensegment = []
+default = ["sevensegment"]
