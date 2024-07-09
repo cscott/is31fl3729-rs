@@ -127,7 +127,7 @@ where
     pub fn sw_enablement(&mut self, setting: SwSetting) -> Result<(), I2cError> {
         let config_register = self.read_u8(addresses::CONFIG_REGISTER)?;
 
-        let new_val = (config_register & 0x0F) | (setting as u8) << 4;
+        let new_val = (config_register & 0x0F) | ((setting as u8) << 4);
         self.write_u8(addresses::CONFIG_REGISTER, new_val)?;
         Ok(())
     }
