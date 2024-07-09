@@ -31,10 +31,10 @@ where
     /// Fill all pixels of the display at once. The brightness should range from 0 to 255.
     pub fn fill_matrix(&mut self, brightnesses: &[u8]) -> Result<(), I2cError> {
         // Extend by one, to add address to the beginning
-        let mut buf = [0x00; 1+addresses::PWM_LEN];
+        let mut buf = [0x00; 1 + addresses::PWM_LEN];
         buf[0] = addresses::PWM_BASE_REGISTER; // set the initial address
 
-        buf[1..=addresses::PWM_LEN].copy_from_slice(&brightnesses[..=(addresses::PWM_LEN-1)]);
+        buf[1..=addresses::PWM_LEN].copy_from_slice(&brightnesses[..=(addresses::PWM_LEN - 1)]);
         self.write(&buf)?;
 
         Ok(())
@@ -42,7 +42,7 @@ where
 
     /// Fill the display with a single brightness. The brightness should range from 0 to 255.
     pub fn fill(&mut self, brightness: u8) -> Result<(), I2cError> {
-        let mut buf = [brightness; addresses::PWM_LEN+1];
+        let mut buf = [brightness; addresses::PWM_LEN + 1];
         buf[0] = addresses::PWM_BASE_REGISTER; // set the initial address
         self.write(&buf)?;
         Ok(())
@@ -117,8 +117,7 @@ where
         let config_val = self.read_u8(addresses::CONFIG_REGISTER)?;
         self.write_u8(
             addresses::CONFIG_REGISTER,
-            (config_val & 0xFE) |
-            (if yes { 0 } else { 1 }),
+            (config_val & 0xFE) | (if yes { 0 } else { 1 }),
         )?;
         Ok(())
     }
@@ -138,11 +137,16 @@ where
     }
 
     /// Set the spread spectrum properties
-    pub fn set_spread_spectrum(&mut self, enable: bool, range: SspRange, cycle: SspCycleTime) -> Result<(), I2cError> {
-        self.write_u8(addresses::SPREAD_SPECTRUM_REGISTER,
-                      (if enable { 0x10 } else { 0x00 }) |
-                      ((range as u8) << 2) |
-                      (cycle as u8))
+    pub fn set_spread_spectrum(
+        &mut self,
+        enable: bool,
+        range: SspRange,
+        cycle: SspCycleTime,
+    ) -> Result<(), I2cError> {
+        self.write_u8(
+            addresses::SPREAD_SPECTRUM_REGISTER,
+            (if enable { 0x10 } else { 0x00 }) | ((range as u8) << 2) | (cycle as u8),
+        )
     }
 
     /// Check for opens
@@ -154,17 +158,24 @@ where
         self.check_open_short(false)
     }
     fn check_open_short(&mut self, open: bool) -> Result<[u8; 18], I2cError> {
-        let mut buf = [0x00 ; addresses::OPEN_SHORT_LEN];
+        let mut buf = [0x00; addresses::OPEN_SHORT_LEN];
         let old_config = self.read_u8(addresses::CONFIG_REGISTER)?;
         let old_gcc = self.read_u8(addresses::GCC_REGISTER)?;
-        let osde = if open { OSDE::EnableOpen } else { OSDE::EnableShort };
+        let osde = if open {
+            OSDE::EnableOpen
+        } else {
+            OSDE::EnableShort
+        };
         self.write_u8(addresses::GCC_REGISTER, 0x01)?;
-        self.write_u8(addresses::CONFIG_REGISTER,
-                      (old_config & 0xF9) | ((osde as u8) << 1))?;
+        self.write_u8(
+            addresses::CONFIG_REGISTER,
+            (old_config & 0xF9) | ((osde as u8) << 1),
+        )?;
         self.i2c.write_read(
             self.address,
             &[addresses::OPEN_SHORT_BASE_REGISTER],
-            &mut buf)?;
+            &mut buf,
+        )?;
         self.write_u8(addresses::CONFIG_REGISTER, old_config & 0xF9)?;
         self.write_u8(addresses::GCC_REGISTER, old_gcc)?;
         Ok(buf)
