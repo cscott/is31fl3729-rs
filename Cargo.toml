@@ -1,9 +1,7 @@
-cargo-features = ['edition2024']
-
 [package] 
 name = "is31fl3729"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 authors = ["Liz Frost", "Daniel Schaefer", "C. Scott Ananian"]
 categories = ["embedded", "no-std"]
 description = "Driver for Lumissil Microsystem's IS31FL3729 IC"
