@@ -238,7 +238,7 @@ pub enum PwmFreq {
     P500 = 0b101,
     /// 250Hz
     P250 = 0b110,
-    /// 90kHz
+    /// 80kHz
     P80k = 0b111,
 }
 
@@ -246,7 +246,7 @@ pub enum PwmFreq {
 pub enum SwSetting {
     // SW1-SW9 active, 9SWx15CS matrix
     Sw1Sw9 = 0b0000,
-    // SW1-SW8 active, 9SWx16CS matrix
+    // SW1-SW8 active, 8SWx16CS matrix
     Sw1Sw8 = 0b0001,
     // SW1-SW7 active, 7SWx16CS matrix, SW8 not active
     Sw1Sw7 = 0b0010,
