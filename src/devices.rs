@@ -64,8 +64,8 @@ where
             }
         } else {
             self.set_digit(base, ((val / 10_f32) as u8) % 10, false)?;
-            self.set_digit(base, ((val) as u8) % 10, true)?;
-            self.set_digit(base, ((10_f32 * val) as u8) % 10, false)?;
+            self.set_digit(base + 1, ((val) as u8) % 10, true)?;
+            self.set_digit(base + 2, ((10_f32 * val) as u8) % 10, false)?;
         }
         Ok(())
     }
